@@ -2363,7 +2363,7 @@ func (p *Peer) WaitForDisconnect() {
 	<-p.quit
 }
 
-// newPeerBase returns a new base bitcoin peer based on the inbound flag.  This
+// newPeerBase returns a new base alpha peer based on the inbound flag.  This
 // is used by the NewInboundPeer and NewOutboundPeer functions to perform base
 // setup needed by both types of peers.
 func newPeerBase(origCfg *Config, inbound bool) *Peer {
@@ -2376,7 +2376,7 @@ func newPeerBase(origCfg *Config, inbound bool) *Peer {
 
 	// Set the chain parameters to testnet if the caller did not specify any.
 	if cfg.ChainParams == nil {
-		cfg.ChainParams = &chaincfg.TestNet3Params
+		cfg.ChainParams = &chaincfg.TestNetParams
 	}
 
 	// Set the trickle interval if a non-positive value is specified.

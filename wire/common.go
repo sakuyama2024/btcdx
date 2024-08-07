@@ -313,12 +313,12 @@ func readElement(r io.Reader, element interface{}) error {
 		*e = InvType(rv)
 		return nil
 
-	case *BitcoinNet:
+	case *AlphaNet:
 		rv, err := binarySerializer.Uint32(r, littleEndian)
 		if err != nil {
 			return err
 		}
-		*e = BitcoinNet(rv)
+		*e = AlphaNet(rv)
 		return nil
 
 	case *BloomUpdateType:
@@ -445,7 +445,7 @@ func writeElement(w io.Writer, element interface{}) error {
 		}
 		return nil
 
-	case BitcoinNet:
+	case AlphaNet:
 		err := binarySerializer.PutUint32(w, littleEndian, uint32(e))
 		if err != nil {
 			return err

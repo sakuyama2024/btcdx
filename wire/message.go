@@ -201,15 +201,15 @@ func makeEmptyMessage(command string) (Message, error) {
 	return msg, nil
 }
 
-// messageHeader defines the header structure for all bitcoin protocol messages.
+// messageHeader defines the header structure for all alpha protocol messages.
 type messageHeader struct {
-	magic    BitcoinNet // 4 bytes
-	command  string     // 12 bytes
-	length   uint32     // 4 bytes
-	checksum [4]byte    // 4 bytes
+	magic    AlphaNet // 4 bytes
+	command  string   // 12 bytes
+	length   uint32   // 4 bytes
+	checksum [4]byte  // 4 bytes
 }
 
-// readMessageHeader reads a bitcoin message header from r.
+// readMessageHeader reads an alpha message header from r.
 func readMessageHeader(r io.Reader) (int, *messageHeader, error) {
 	// Since readElements doesn't return the amount of bytes read, attempt
 	// to read the entire header into a buffer first in case there is a
@@ -253,10 +253,10 @@ func discardInput(r io.Reader, n uint32) {
 	}
 }
 
-// WriteMessageN writes a bitcoin Message to w including the necessary header
+// WriteMessageN writes an alpha Message to w including the necessary header
 // information and returns the number of bytes written.    This function is the
 // same as WriteMessage except it also returns the number of bytes written.
-func WriteMessageN(w io.Writer, msg Message, pver uint32, btcnet BitcoinNet) (int, error) {
+func WriteMessageN(w io.Writer, msg Message, pver uint32, btcnet AlphaNet) (int, error) {
 	return WriteMessageWithEncodingN(w, msg, pver, btcnet, BaseEncoding)
 }
 
@@ -265,7 +265,7 @@ func WriteMessageN(w io.Writer, msg Message, pver uint32, btcnet BitcoinNet) (in
 // doesn't return the number of bytes written.  This function is mainly provided
 // for backwards compatibility with the original API, but it's also useful for
 // callers that don't care about byte counts.
-func WriteMessage(w io.Writer, msg Message, pver uint32, btcnet BitcoinNet) error {
+func WriteMessage(w io.Writer, msg Message, pver uint32, btcnet AlphaNet) error {
 	_, err := WriteMessageN(w, msg, pver, btcnet)
 	return err
 }
@@ -276,7 +276,7 @@ func WriteMessage(w io.Writer, msg Message, pver uint32, btcnet BitcoinNet) erro
 // to specify the message encoding format to be used when serializing wire
 // messages.
 func WriteMessageWithEncodingN(w io.Writer, msg Message, pver uint32,
-	btcnet BitcoinNet, encoding MessageEncoding) (int, error) {
+	btcnet AlphaNet, encoding MessageEncoding) (int, error) {
 
 	totalBytes := 0
 
@@ -352,7 +352,7 @@ func WriteMessageWithEncodingN(w io.Writer, msg Message, pver uint32,
 // comprise the message.  This function is the same as ReadMessageN except it
 // allows the caller to specify which message encoding is to to consult when
 // decoding wire messages.
-func ReadMessageWithEncodingN(r io.Reader, pver uint32, btcnet BitcoinNet,
+func ReadMessageWithEncodingN(r io.Reader, pver uint32, btcnet AlphaNet,
 	enc MessageEncoding) (int, Message, []byte, error) {
 
 	totalBytes := 0
@@ -440,7 +440,7 @@ func ReadMessageWithEncodingN(r io.Reader, pver uint32, btcnet BitcoinNet,
 // bytes read in addition to the parsed Message and raw bytes which comprise the
 // message.  This function is the same as ReadMessage except it also returns the
 // number of bytes read.
-func ReadMessageN(r io.Reader, pver uint32, btcnet BitcoinNet) (int, Message, []byte, error) {
+func ReadMessageN(r io.Reader, pver uint32, btcnet AlphaNet) (int, Message, []byte, error) {
 	return ReadMessageWithEncodingN(r, pver, btcnet, BaseEncoding)
 }
 
@@ -450,7 +450,7 @@ func ReadMessageN(r io.Reader, pver uint32, btcnet BitcoinNet) (int, Message, []
 // from ReadMessageN in that it doesn't return the number of bytes read.  This
 // function is mainly provided for backwards compatibility with the original
 // API, but it's also useful for callers that don't care about byte counts.
-func ReadMessage(r io.Reader, pver uint32, btcnet BitcoinNet) (Message, []byte, error) {
+func ReadMessage(r io.Reader, pver uint32, btcnet AlphaNet) (Message, []byte, error) {
 	_, msg, buf, err := ReadMessageN(r, pver, btcnet)
 	return msg, buf, err
 }

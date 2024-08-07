@@ -135,9 +135,9 @@ func New(activeNet *chaincfg.Params, handlers *rpcclient.NotificationHandlers,
 	switch activeNet.Net {
 	case wire.MainNet:
 		// No extra flags since mainnet is the default
-	case wire.TestNet3:
-		extraArgs = append(extraArgs, "--testnet")
 	case wire.TestNet:
+		extraArgs = append(extraArgs, "--testnet")
+	case wire.RegNet:
 		extraArgs = append(extraArgs, "--regtest")
 	case wire.SimNet:
 		extraArgs = append(extraArgs, "--simnet")
@@ -570,10 +570,10 @@ func NextAvailablePortForProcess(pid int) int {
 		os.TempDir(), fmt.Sprintf("rpctest-port-pid-%d.lock", pid),
 	)
 	timeout := time.After(time.Second)
-	
+
 	var (
 		lockFileHandle *os.File
-		err error
+		err            error
 	)
 	for {
 		// Attempt to acquire the lock file. If it already exists, wait

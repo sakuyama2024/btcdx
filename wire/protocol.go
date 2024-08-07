@@ -162,41 +162,41 @@ func (f ServiceFlag) String() string {
 	return s
 }
 
-// BitcoinNet represents which bitcoin network a message belongs to.
-type BitcoinNet uint32
+// AlphaNet represents which alpha network a message belongs to.
+type AlphaNet uint32
 
-// Constants used to indicate the message bitcoin network.  They can also be
+// Constants used to indicate the message alpha network.  They can also be
 // used to seek to the next message when a stream's state is unknown, but
 // this package does not provide that functionality since it's generally a
 // better idea to simply disconnect clients that are misbehaving over TCP.
 const (
 	// MainNet represents the main bitcoin network.
-	MainNet BitcoinNet = 0xd9b4bef9
+	//	MainNet AlphaNet = 0xd9b4bef9
+	MainNet AlphaNet = 0xf9beb4d9
+	// RegNet represents the regression test network.
+	RegNet AlphaNet = 0xdab5bffa
 
-	// TestNet represents the regression test network.
-	TestNet BitcoinNet = 0xdab5bffa
-
-	// TestNet3 represents the test network (version 3).
-	TestNet3 BitcoinNet = 0x0709110b
+	// TestNet represents the test network (version 3).
+	TestNet AlphaNet = 0x0709110b
 
 	// SimNet represents the simulation test network.
-	SimNet BitcoinNet = 0x12141c16
+	SimNet AlphaNet = 0x12141c16
 )
 
-// bnStrings is a map of bitcoin networks back to their constant names for
+// bnStrings is a map of alpha networks back to their constant names for
 // pretty printing.
-var bnStrings = map[BitcoinNet]string{
-	MainNet:  "MainNet",
-	TestNet:  "TestNet",
-	TestNet3: "TestNet3",
-	SimNet:   "SimNet",
+var bnStrings = map[AlphaNet]string{
+	MainNet: "MainNet",
+	RegNet:  "RegNet",
+	TestNet: "TestNet",
+	SimNet:  "SimNet",
 }
 
-// String returns the BitcoinNet in human-readable form.
-func (n BitcoinNet) String() string {
+// String returns the AlphaNet in human-readable form.
+func (n AlphaNet) String() string {
 	if s, ok := bnStrings[n]; ok {
 		return s
 	}
 
-	return fmt.Sprintf("Unknown BitcoinNet (%d)", uint32(n))
+	return fmt.Sprintf("Unknown AlphaNet (%d)", uint32(n))
 }

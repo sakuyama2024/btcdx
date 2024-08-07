@@ -6,7 +6,6 @@ package chaincfg
 
 import (
 	"bytes"
-	"encoding/hex"
 	"math/big"
 	"testing"
 )
@@ -84,23 +83,6 @@ func TestInvalidHDKeyID(t *testing.T) {
 	// FIXME: The error type should be changed to ErrInvalidHDKeyID.
 	if _, err := HDPrivateKeyToPublicKeyID(prvInvalid); err != ErrUnknownHDKeyID {
 		t.Fatalf("HDPrivateKeyToPublicKeyID: want err ErrUnknownHDKeyID, got %v", err)
-	}
-}
-
-func TestSigNetPowLimit(t *testing.T) {
-	sigNetPowLimitHex, _ := hex.DecodeString(
-		"00000377ae000000000000000000000000000000000000000000000000000000",
-	)
-	powLimit := new(big.Int).SetBytes(sigNetPowLimitHex)
-	if sigNetPowLimit.Cmp(powLimit) != 0 {
-		t.Fatalf("Signet PoW limit bits (%s) not equal to big int (%s)",
-			sigNetPowLimit.Text(16), powLimit.Text(16))
-	}
-
-	if compactToBig(sigNetGenesisBlock.Header.Bits).Cmp(powLimit) != 0 {
-		t.Fatalf("Signet PoW limit header bits (%d) not equal to big "+
-			"int (%s)", sigNetGenesisBlock.Header.Bits,
-			powLimit.Text(16))
 	}
 }
 

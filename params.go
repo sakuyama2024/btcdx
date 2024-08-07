@@ -28,7 +28,7 @@ type params struct {
 // to emulate the full reference implementation RPC API.
 var mainNetParams = params{
 	Params:  &chaincfg.MainNetParams,
-	rpcPort: "8334",
+	rpcPort: "8554",
 }
 
 // regressionNetParams contains parameters specific to the regression test
@@ -37,29 +37,20 @@ var mainNetParams = params{
 // details.
 var regressionNetParams = params{
 	Params:  &chaincfg.RegressionNetParams,
-	rpcPort: "18334",
+	rpcPort: "8655",
 }
 
-// testNet3Params contains parameters specific to the test network (version 3)
-// (wire.TestNet3).  NOTE: The RPC port is intentionally different than the
-// reference implementation - see the mainNetParams comment for details.
-var testNet3Params = params{
-	Params:  &chaincfg.TestNet3Params,
-	rpcPort: "18334",
+// testNetParams contains parameters specific to the test network
+var testNetParams = params{
+	Params:  &chaincfg.TestNetParams,
+	rpcPort: "8756",
 }
 
 // simNetParams contains parameters specific to the simulation test network
 // (wire.SimNet).
 var simNetParams = params{
 	Params:  &chaincfg.SimNetParams,
-	rpcPort: "18556",
-}
-
-// sigNetParams contains parameters specific to the Signet network
-// (wire.SigNet).
-var sigNetParams = params{
-	Params:  &chaincfg.SigNetParams,
-	rpcPort: "38332",
+	rpcPort: "8857",
 }
 
 // netName returns the name used when referring to a bitcoin network.  At the
@@ -73,7 +64,7 @@ var sigNetParams = params{
 // removed and the network parameter's name used instead.
 func netName(chainParams *params) string {
 	switch chainParams.Net {
-	case wire.TestNet3:
+	case wire.TestNet:
 		return "testnet"
 	default:
 		return chainParams.Name

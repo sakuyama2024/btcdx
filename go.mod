@@ -31,6 +31,16 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
+replace github.com/btcsuite/btcd/btcec/v2 => ../btcd_test/btcec
+
+replace github.com/btcsuite/btcd/btcutil => ../btcd_test/btcutil
+
+replace github.com/btcsuite/btcd/chaincfg/chainhash => ../btcd_test/chaincfg/chainhash
+
+replace github.com/btcsuite/btcd/wire => ../btcd_test/wire
+
+replace github.com/btcsuite/btcd/database => ../btcd_test/database
+
 // The retract statements below fixes an accidental push of the tags of a btcd
 // fork.
 retract (

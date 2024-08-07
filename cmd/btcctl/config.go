@@ -106,8 +106,7 @@ type config struct {
 	RPCUser        string `short:"u" long:"rpcuser" description:"RPC username"`
 	SimNet         bool   `long:"simnet" description:"Connect to the simulation test network"`
 	TLSSkipVerify  bool   `long:"skipverify" description:"Do not verify tls certificates (not recommended!)"`
-	TestNet3       bool   `long:"testnet" description:"Connect to testnet"`
-	SigNet         bool   `long:"signet" description:"Connect to signet"`
+	TestNet        bool   `long:"testnet" description:"Connect to testnet"`
 	ShowVersion    bool   `short:"V" long:"version" description:"Display version information and exit"`
 	Wallet         bool   `long:"wallet" description:"Connect to wallet"`
 }
@@ -119,17 +118,17 @@ func normalizeAddress(addr string, chain *chaincfg.Params, useWallet bool) (stri
 	if err != nil {
 		var defaultPort string
 		switch chain {
-		case &chaincfg.TestNet3Params:
+		case &chaincfg.TestNetParams:
 			if useWallet {
-				defaultPort = "18332"
+				defaultPort = "8754"
 			} else {
-				defaultPort = "18334"
+				defaultPort = "8756"
 			}
 		case &chaincfg.SimNetParams:
 			if useWallet {
-				defaultPort = "18554"
+				defaultPort = "8555"
 			} else {
-				defaultPort = "18556"
+				defaultPort = "8857"
 			}
 		case &chaincfg.RegressionNetParams:
 			if useWallet {
@@ -137,19 +136,13 @@ func normalizeAddress(addr string, chain *chaincfg.Params, useWallet bool) (stri
 				paramErr := fmt.Errorf("cannot use -wallet with -regtest, btcwallet not yet compatible with regtest")
 				return "", paramErr
 			} else {
-				defaultPort = "18334"
-			}
-		case &chaincfg.SigNetParams:
-			if useWallet {
-				defaultPort = "38332"
-			} else {
-				defaultPort = "38334"
+				defaultPort = "8655"
 			}
 		default:
 			if useWallet {
-				defaultPort = "8332"
+				defaultPort = "8552"
 			} else {
-				defaultPort = "8334"
+				defaultPort = "8554"
 			}
 		}
 
@@ -268,9 +261,9 @@ func loadConfig() (*config, []string, error) {
 
 	// Multiple networks can't be selected simultaneously.
 	numNets := 0
-	if cfg.TestNet3 {
+	if cfg.TestNet {
 		numNets++
-		network = &chaincfg.TestNet3Params
+		network = &chaincfg.TestNetParams
 	}
 	if cfg.SimNet {
 		numNets++
@@ -279,10 +272,6 @@ func loadConfig() (*config, []string, error) {
 	if cfg.RegressionTest {
 		numNets++
 		network = &chaincfg.RegressionNetParams
-	}
-	if cfg.SigNet {
-		numNets++
-		network = &chaincfg.SigNetParams
 	}
 
 	if numNets > 1 {
